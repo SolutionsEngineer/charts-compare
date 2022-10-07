@@ -3,8 +3,11 @@ import React, {
   ReactElement,
   useCallback,
   useEffect,
+  useMemo,
+  useRef,
   useState,
 } from "react";
+import debounce from "lodash.debounce";
 import { ProfilerRenderCallback } from "../types/timing";
 
 type RenderTimingCounterProps = {
@@ -12,18 +15,48 @@ type RenderTimingCounterProps = {
   children: ReactElement;
 };
 
-const RENDER_DATA_LOCAL_STORAGE_ID = "renderData";
-const MAX_ALLOWED_RENDER_TIME_MS = 5000;
+const MAX_ALLOWED_RENDER_PAUSE_TIME_MS = 400;
 
 export default function RenderTimingCounter({
   id,
   children,
 }: RenderTimingCounterProps): ReactElement {
-  const [renderData, setRenderData] = useState<ProfilerRenderCallback[]>([]);
   const [actualRenderTime, setActualRenderTime] = useState<number>();
   const [totalRenderTime, setTotalRenderTime] = useState<number>();
-  const [allowedTimeFinished, setAllowedTimeFinished] =
+  const [allowedRenderPauseTimeFinished, setAllowedRenderPauseTimeFinished] =
     useState<boolean>(false);
+  const renderTimesRef = useRef<ProfilerRenderCallback[]>([]);
+
+  const sumRenderingTimes = useCallback(() => {
+    const actualTime = renderTimesRef.current.reduce((sum, renderPartTime) => {
+      sum += renderPartTime.actualDuration;
+      return sum;
+    }, 0);
+
+    setActualRenderTime(actualTime);
+    setTotalRenderTime(
+      renderTimesRef.current[renderTimesRef.current.length - 1].commitTime -
+        renderTimesRef.current[0].startTime
+    );
+  }, []);
+
+  const changeHandler = useCallback(() => {
+    setAllowedRenderPauseTimeFinished(true);
+    sumRenderingTimes();
+    console.log("time stopped");
+  }, [sumRenderingTimes]);
+
+  const debouncedChangeHandler = useMemo(
+    () => debounce(changeHandler, MAX_ALLOWED_RENDER_PAUSE_TIME_MS),
+    [changeHandler]
+  );
+  // Stop the invocation of the debounced function
+  // after unmounting
+  useEffect(() => {
+    return () => {
+      debouncedChangeHandler.cancel();
+    };
+  }, [debouncedChangeHandler]);
 
   const saveRenderData = useCallback(
     (
@@ -35,89 +68,33 @@ export default function RenderTimingCounter({
       commitTime: number
     ) => {
       console.log("data change");
-      localStorage.setItem(
-        RENDER_DATA_LOCAL_STORAGE_ID + `_at_${startTime}`,
-        JSON.stringify({
-          id,
-          phase,
-          actualDuration,
-          baseDuration,
-          startTime,
-          commitTime,
-        })
-      );
+      debouncedChangeHandler();
+      renderTimesRef.current.push({
+        id,
+        phase,
+        actualDuration,
+        baseDuration,
+        startTime,
+        commitTime,
+      });
     },
-    []
+    [debouncedChangeHandler]
   );
 
-  const setRenderDataFromLocalStorage = useCallback(() => {
-    const renderDataKeys = Object.keys(localStorage).filter((key) =>
-      key.startsWith(RENDER_DATA_LOCAL_STORAGE_ID)
-    );
-    const rawRenderData: ProfilerRenderCallback[] = renderDataKeys
-      .map((key) => localStorage.getItem(key))
-      .filter((rawData) => rawData !== null)
-      .map((rawData) => JSON.parse(rawData!) as ProfilerRenderCallback)
-      .sort((a, b) => {
-        return a.startTime - b.startTime;
-      });
-
-    console.log(rawRenderData);
-    setRenderData(rawRenderData);
-    localStorage.clear();
-  }, []);
-
-  const sumRenderingTimes = useCallback(() => {
-    if (renderData.length > 0) {
-      const actualTime = renderData.reduce((sum, renderPartTime) => {
-        sum += renderPartTime.actualDuration;
-        return sum;
-      }, 0);
-
-      setActualRenderTime(actualTime);
-      setTotalRenderTime(
-        renderData[renderData.length - 1].commitTime - renderData[0].startTime
-      );
-    }
-  }, [renderData]);
-
-  useEffect(() => {
-    if (!allowedTimeFinished) {
-      localStorage.clear();
-      const interval = setInterval(() => {
-        setAllowedTimeFinished(true);
-        setRenderDataFromLocalStorage();
-        clearInterval(interval);
-      }, MAX_ALLOWED_RENDER_TIME_MS);
-
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [allowedTimeFinished, setRenderDataFromLocalStorage, sumRenderingTimes]);
-
-  useEffect(() => {
-    sumRenderingTimes();
-  }, [sumRenderingTimes]);
-
-  if (allowedTimeFinished) {
+  if (allowedRenderPauseTimeFinished) {
     return (
-      <>
-        {allowedTimeFinished && (
-          <>
-            <p>Actual render time: {actualRenderTime}</p>
-            <p>Total render time: {totalRenderTime}</p>
-          </>
-        )}
-      </>
+      allowedRenderPauseTimeFinished && (
+        <>
+          <p>Actual render time: {actualRenderTime}</p>
+          <p>Total render time: {totalRenderTime}</p>
+        </>
+      )
     );
   } else {
     return (
-      <>
-        <Profiler id={id} onRender={saveRenderData}>
-          {children}
-        </Profiler>
-      </>
+      <Profiler id={id} onRender={saveRenderData}>
+        {children}
+      </Profiler>
     );
   }
 }
