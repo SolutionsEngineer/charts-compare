@@ -9,8 +9,8 @@ function App() {
     <>
       {/* <RechartsLineChart dataSet={mediumDataSet} />;
       <RechartsLineChart dataSet={largeDataSet} />; */}
-      <RechartsAreaChart dataSet={tinyDataSet} />;
-      <RechartsAreaChart dataSet={largeDataSet} />;
+      <RechartsAreaChart dataSet={tinyDataSet} />
+      <RechartsAreaChart dataSet={largeDataSet} />
     </>
   );
 }
