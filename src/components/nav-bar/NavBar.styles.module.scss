@@ -1,0 +1,51 @@
+.navWrapper {
+  :global {
+    .ant-menu-submenu-selected {
+      transition: all 0.3s;
+    }
+    .ant-menu-inline-collapsed {
+      .ant-menu-submenu-selected {
+        border-left: solid;
+        border-width: 5px;
+        border-image-slice: 1;
+        border-image-source: linear-gradient(
+          to right,
+          rgb(67, 124, 205),
+          rgb(69, 214, 202)
+        );
+
+        .ant-menu-item-icon {
+          transform: translateX(-5px);
+        }
+      }
+    }
+  }
+
+  .border-gradient {
+    border: 10px solid;
+    border-image-slice: 1;
+    border-width: 5px;
+  }
+  .border-gradient-purple {
+    border-image-source: linear-gradient(
+      to right,
+      rgb(67, 124, 205),
+      rgb(69, 214, 202)
+    );
+  }
+
+  .navHeaderText {
+    height: 64px;
+    width: fit-content;
+    overflow: hidden;
+    white-space: pre;
+    user-select: none;
+    padding-top: 12px;
+    padding-left: 12px;
+    font-size: 2em;
+    background: linear-gradient(to right, rgb(67, 124, 205), rgb(69, 214, 202));
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}

@@ -4,7 +4,7 @@ import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const RechartsLineChart = ({ dataSet }: { dataSet: any[] }) => {
   return (
-    <RenderTimingCounter id="LineChart">
+    <RenderTimingCounter id="RechartsLineChart" onFinish={() => {}}>
       <LineChart width={500} height={300} data={dataSet}>
         <XAxis dataKey="name" />
         <YAxis />
@@ -16,4 +16,4 @@ const RechartsLineChart = ({ dataSet }: { dataSet: any[] }) => {
   );
 };
 
-export default RechartsLineChart;
+export default React.memo(RechartsLineChart);

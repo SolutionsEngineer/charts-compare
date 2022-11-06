@@ -2,7 +2,6 @@ import React, {
   Profiler,
   ReactElement,
   useCallback,
-  useEffect,
   useMemo,
   useRef,
   useState,
@@ -13,13 +12,15 @@ import { ProfilerRenderCallback } from "../types/timing";
 type RenderTimingCounterProps = {
   id: string;
   children: ReactElement;
+  onFinish: () => void;
 };
 
-const MAX_ALLOWED_RENDER_PAUSE_TIME_MS = 400;
+const MAX_ALLOWED_RENDER_PAUSE_TIME_MS = 1000;
 
 export default function RenderTimingCounter({
   id,
   children,
+  onFinish,
 }: RenderTimingCounterProps): ReactElement {
   const [actualRenderTime, setActualRenderTime] = useState<number>();
   const [totalRenderTime, setTotalRenderTime] = useState<number>();
@@ -38,25 +39,25 @@ export default function RenderTimingCounter({
       renderTimesRef.current[renderTimesRef.current.length - 1].commitTime -
         renderTimesRef.current[0].startTime
     );
+
+    console.log("Actual render time: " + actualTime);
+    console.log(
+      "Total render time: " +
+        (renderTimesRef.current[renderTimesRef.current.length - 1].commitTime -
+          renderTimesRef.current[0].startTime)
+    );
   }, []);
 
   const changeHandler = useCallback(() => {
     setAllowedRenderPauseTimeFinished(true);
     sumRenderingTimes();
-    console.log("time stopped");
-  }, [sumRenderingTimes]);
+    onFinish();
+  }, [sumRenderingTimes, onFinish]);
 
   const debouncedChangeHandler = useMemo(
     () => debounce(changeHandler, MAX_ALLOWED_RENDER_PAUSE_TIME_MS),
     [changeHandler]
   );
-  // Stop the invocation of the debounced function
-  // after unmounting
-  useEffect(() => {
-    return () => {
-      debouncedChangeHandler.cancel();
-    };
-  }, [debouncedChangeHandler]);
 
   const saveRenderData = useCallback(
     (
@@ -83,12 +84,10 @@ export default function RenderTimingCounter({
 
   if (allowedRenderPauseTimeFinished) {
     return (
-      allowedRenderPauseTimeFinished && (
-        <>
-          <p>Actual render time: {actualRenderTime}</p>
-          <p>Total render time: {totalRenderTime}</p>
-        </>
-      )
+      <>
+        <p>Actual render time: {actualRenderTime}</p>
+        <p>Total render time: {totalRenderTime}</p>
+      </>
     );
   } else {
     return (
