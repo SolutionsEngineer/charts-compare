@@ -11,7 +11,10 @@ type ChartGeneratorProps = {
 
 const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
   const [state, updateState] = useState<number>(0);
-  const forceUpdate = useCallback(() => updateState(Math.random()), []);
+  const forceUpdate = useCallback(
+    () => updateState((prevState) => prevState + 1),
+    []
+  );
 
   const debouncedUpdateHandler = useMemo(
     () => debounce(forceUpdate, 1000),
