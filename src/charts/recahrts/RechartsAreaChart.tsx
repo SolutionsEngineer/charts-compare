@@ -9,9 +9,15 @@ import {
 } from "recharts";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
-const RechartsAreaChart = ({ dataSet }: { dataSet: any[] }) => {
+const RechartsAreaChart = ({
+  dataSet,
+  onFinish,
+}: {
+  dataSet: any[];
+  onFinish: () => void;
+}) => {
   return (
-    <RenderTimingCounter id="AreaChart">
+    <RenderTimingCounter id="RechartsAreaChart" onFinish={onFinish}>
       <AreaChart
         width={500}
         height={400}
@@ -33,4 +39,4 @@ const RechartsAreaChart = ({ dataSet }: { dataSet: any[] }) => {
   );
 };
 
-export default RechartsAreaChart;
+export default React.memo(RechartsAreaChart);
