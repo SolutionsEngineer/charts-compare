@@ -10,7 +10,7 @@ const VictoryAreaChartComponent = ({
   onFinish: () => void;
 }) => {
   return (
-    <RenderTimingCounter id="RechartsAreaChart" onFinish={onFinish}>
+    <RenderTimingCounter id="VictoryAreaChartComponent" onFinish={onFinish}>
       <VictoryChart theme={VictoryTheme.material}>
         <VictoryArea style={{ data: { fill: "#c43a31" } }} data={dataSet} />
       </VictoryChart>

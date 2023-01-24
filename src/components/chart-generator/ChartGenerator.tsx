@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from "react";
 
 import { debounce } from "lodash";
-import RechartsAreaChart from "../../charts/recahrts/RechartsAreaChart";
 import { largeDataSet } from "../../charts-data/LargeChartsDataSource";
 import { SelectedChart } from "../nav-bar/NavBar";
+import VictoryLineChartComponent from "../../charts/victory-charts/VictoryLineChart";
 
 type ChartGeneratorProps = {
   selectedChart?: SelectedChart;
@@ -25,18 +25,22 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
     <div key={state}>
       {/* <RechartsLineChart dataSet={mediumDataSet} />;
       <RechartsLineChart dataSet={largeDataSet} />; */}
-      <RechartsAreaChart
+      {/* <RechartsAreaChart
+        dataSet={largeDataSet}
+        onFinish={debouncedUpdateHandler}
+      /> */}
+      {/* <VictoryAreaChartComponent
+        dataSet={largeDataSet}
+        onFinish={debouncedUpdateHandler}
+      /> */}
+      {/* <VictoryAreaChartComponent
+        dataSet={largeDataSet}
+        onFinish={debouncedUpdateHandler}
+      /> */}
+      <VictoryLineChartComponent
         dataSet={largeDataSet}
         onFinish={debouncedUpdateHandler}
       />
-      {/* <VictoryAreaChartComponent
-        dataSet={largeDataSet}
-        onFinish={debouncedUpdateHandler}
-      /> */}
-      {/* <VictoryAreaChartComponent
-        dataSet={largeDataSet}
-        onFinish={debouncedUpdateHandler}
-      /> */}
     </div>
   );
 };
