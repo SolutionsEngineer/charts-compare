@@ -3,10 +3,10 @@ import { Layout, Menu, MenuProps } from "antd";
 import { LibraryNameEnum } from "../../enums/LibraryNameEnum";
 import RechartsLogo from "../../logos/RechartsLogo";
 import { ChartTypeEnum } from "../../enums/ChartTypeEnum";
-import AtndChartLogo from "../../logos/AntdChartLogo";
 import VictoryChartsLogo from "../../logos/VictoryChartsLogo";
 
 import styles from "./NavBar.styles.module.scss";
+import VisxLogo from "../../logos/VisxLogo";
 
 const { Sider } = Layout;
 
@@ -31,14 +31,14 @@ type NavBarProps = {
 const NavBar = ({ onSelect }: NavBarProps) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const antDesignNestedNavItems: NavItemType[] = [
+  const visxNestedNavItems: NavItemType[] = [
     {
-      key: LibraryNameEnum.AntDesign + ChartTypeEnum.LineChart,
-      label: LibraryNameEnum.AntDesign + ChartTypeEnum.LineChart,
+      key: LibraryNameEnum.Visx + ChartTypeEnum.LineChart,
+      label: LibraryNameEnum.Visx + ChartTypeEnum.LineChart,
     },
     {
-      key: LibraryNameEnum.AntDesign + ChartTypeEnum.AreaChart,
-      label: LibraryNameEnum.AntDesign + ChartTypeEnum.AreaChart,
+      key: LibraryNameEnum.Visx + ChartTypeEnum.BarChart,
+      label: LibraryNameEnum.Visx + ChartTypeEnum.BarChart,
     },
   ];
 
@@ -48,8 +48,8 @@ const NavBar = ({ onSelect }: NavBarProps) => {
       label: LibraryNameEnum.Recharts + ChartTypeEnum.LineChart,
     },
     {
-      key: LibraryNameEnum.Recharts + ChartTypeEnum.AreaChart,
-      label: LibraryNameEnum.Recharts + ChartTypeEnum.AreaChart,
+      key: LibraryNameEnum.Recharts + ChartTypeEnum.BarChart,
+      label: LibraryNameEnum.Recharts + ChartTypeEnum.BarChart,
     },
   ];
 
@@ -59,18 +59,12 @@ const NavBar = ({ onSelect }: NavBarProps) => {
       label: LibraryNameEnum.Victory + ChartTypeEnum.LineChart,
     },
     {
-      key: LibraryNameEnum.Victory + ChartTypeEnum.AreaChart,
-      label: LibraryNameEnum.Victory + ChartTypeEnum.AreaChart,
+      key: LibraryNameEnum.Victory + ChartTypeEnum.BarChart,
+      label: LibraryNameEnum.Victory + ChartTypeEnum.BarChart,
     },
   ];
 
   const mainNavItems: NavItemType[] = [
-    {
-      key: LibraryNameEnum.AntDesign,
-      label: LibraryNameEnum.AntDesign,
-      icon: AtndChartLogo,
-      children: antDesignNestedNavItems,
-    },
     {
       key: LibraryNameEnum.Recharts,
       label: LibraryNameEnum.Recharts,
@@ -82,6 +76,12 @@ const NavBar = ({ onSelect }: NavBarProps) => {
       label: LibraryNameEnum.Victory,
       icon: VictoryChartsLogo,
       children: victoryNestedNavItems,
+    },
+    {
+      key: LibraryNameEnum.Visx,
+      label: LibraryNameEnum.Visx,
+      icon: VisxLogo,
+      children: visxNestedNavItems,
     },
   ];
   return (

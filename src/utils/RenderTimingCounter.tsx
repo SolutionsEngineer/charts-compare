@@ -15,7 +15,7 @@ type RenderTimingCounterProps = {
   onFinish: () => void;
 };
 
-const MAX_ALLOWED_RENDER_PAUSE_TIME_MS = 1000;
+const MAX_ALLOWED_RENDER_PAUSE_TIME_MS = 2000;
 
 export default function RenderTimingCounter({
   id,

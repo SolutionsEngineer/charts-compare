@@ -1,9 +1,9 @@
 import React, { useCallback, useMemo, useState } from "react";
 
 import { debounce } from "lodash";
-import { largeDataSet } from "../../charts-data/LargeChartsDataSource";
 import { SelectedChart } from "../nav-bar/NavBar";
-import VictoryLineChartComponent from "../../charts/victory-charts/VictoryLineChart";
+import { MonthlyWeather } from "../../charts-datasource/MonthlyWeather";
+import VictoryLineChart from "../../charts/victory/VictoryLineChart";
 
 type ChartGeneratorProps = {
   selectedChart?: SelectedChart;
@@ -11,6 +11,7 @@ type ChartGeneratorProps = {
 
 const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
   const [state, updateState] = useState<number>(0);
+
   const forceUpdate = useCallback(
     () => updateState((prevState) => prevState + 1),
     []
@@ -21,26 +22,15 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
     [forceUpdate]
   );
 
+  const dataSet = useMemo(() => MonthlyWeather, []);
+
   return (
     <div key={state}>
-      {/* <RechartsLineChart dataSet={mediumDataSet} />;
-      <RechartsLineChart dataSet={largeDataSet} />; */}
-      {/* <RechartsAreaChart
-        dataSet={largeDataSet}
-        onFinish={debouncedUpdateHandler}
-      /> */}
-      {/* <VictoryAreaChartComponent
-        dataSet={largeDataSet}
-        onFinish={debouncedUpdateHandler}
-      /> */}
-      {/* <VictoryAreaChartComponent
-        dataSet={largeDataSet}
-        onFinish={debouncedUpdateHandler}
-      /> */}
-      <VictoryLineChartComponent
-        dataSet={largeDataSet}
-        onFinish={debouncedUpdateHandler}
-      />
+      {/* <RechartsLineChart dataSet={dataSet} onFinish={debouncedUpdateHandler} /> */}
+      {/* <RechartsBarChart dataSet={dataSet} onFinish={debouncedUpdateHandler} /> */}
+      {/* <VictoryBarChart dataSet={dataSet} onFinish={debouncedUpdateHandler} /> */}
+      <VictoryLineChart dataSet={dataSet} onFinish={debouncedUpdateHandler} />
+      {/* <VisxBarChart dataSet={dataSet} onFinish={debouncedUpdateHandler} /> */}
     </div>
   );
 };

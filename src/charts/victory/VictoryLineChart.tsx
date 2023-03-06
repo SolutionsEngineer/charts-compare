@@ -1,27 +1,27 @@
 import React from "react";
-import { VictoryChart, VictoryLine, VictoryTheme } from "victory";
+import { VictoryChart, VictoryLine } from "victory";
+import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const VictoryLineChartComponent = ({
   dataSet,
   onFinish,
 }: {
-  dataSet: any[];
+  dataSet: ChartDataSource[];
   onFinish: () => void;
 }) => {
   return (
     <RenderTimingCounter id="VictoryLineChartComponent" onFinish={onFinish}>
-      <VictoryChart theme={VictoryTheme.material}>
+      <VictoryChart>
         <VictoryLine
-          animate={{
-            duration: 2000,
-            onLoad: { duration: 1000 },
-          }}
+          animate={true}
           style={{
             data: { stroke: "#c43a31" },
             parent: { border: "1px solid #ccc" },
           }}
           data={dataSet}
+          x="time"
+          y="t_outside"
         />
       </VictoryChart>
     </RenderTimingCounter>

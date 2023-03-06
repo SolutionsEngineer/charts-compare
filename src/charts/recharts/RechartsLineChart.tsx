@@ -1,16 +1,21 @@
 import React from "react";
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
+import { CommonChartProps } from "../../types/CommonChartTypes";
 
-const RechartsLineChart = ({ dataSet }: { dataSet: any[] }) => {
+const RechartsLineChart = ({ dataSet, onFinish }: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="RechartsLineChart" onFinish={() => {}}>
+    <RenderTimingCounter id="RechartsLineChart" onFinish={onFinish}>
       <LineChart width={500} height={300} data={dataSet}>
-        <XAxis dataKey="name" />
+        <XAxis dataKey="time" />
         <YAxis />
         <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
-        <Line type="monotone" dataKey="y" stroke="#8884d8" />
-        {/* <Line type="monotone" dataKey="x" stroke="#82ca9d" /> */}
+        <Line
+          type="monotone"
+          dataKey="t_outside"
+          stroke="#8884d8"
+          isAnimationActive={false}
+        />
       </LineChart>
     </RenderTimingCounter>
   );
