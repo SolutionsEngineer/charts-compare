@@ -1,17 +1,11 @@
 import React from "react";
-import {
-  AnimatedAxis,
-  AnimatedGrid,
-  XYChart,
-  Tooltip,
-  AnimatedLineSeries,
-} from "@visx/xychart";
+import { Axis, Grid, XYChart, AnimatedLineSeries } from "@visx/xychart";
 
 import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const accessors = {
-  xAccessor: (d: ChartDataSource) => d.time as never,
+  xAccessor: (d: ChartDataSource) => new Date(d.time).toISOString(),
   yAccessor: (d: ChartDataSource) => d.t_outside as never,
 };
 
@@ -30,25 +24,10 @@ const VisxLineChartComponent = ({
         xScale={{ type: "band" }}
         yScale={{ type: "linear" }}
       >
-        <AnimatedAxis orientation="bottom" />
-        <AnimatedGrid columns={false} numTicks={4} />
+        <Axis orientation="bottom" numTicks={2} />
+        <Axis orientation="left" numTicks={2} />
+        <Grid columns={false} numTicks={2} />
         <AnimatedLineSeries data={dataSet} dataKey="time" {...accessors} />
-        <Tooltip
-          snapTooltipToDatumX
-          snapTooltipToDatumY
-          showVerticalCrosshair
-          showSeriesGlyphs
-          renderTooltip={({ tooltipData, colorScale }: any) => (
-            <div>
-              <div style={{ color: colorScale(tooltipData.nearestDatum.key) }}>
-                {tooltipData.nearestDatum.key}
-              </div>
-              {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-              {", "}
-              {accessors.yAccessor(tooltipData.nearestDatum.datum)}
-            </div>
-          )}
-        />
       </XYChart>
     </RenderTimingCounter>
   );

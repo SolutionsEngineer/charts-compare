@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  AnimatedAxis,
-  AnimatedGrid,
-  XYChart,
-  Tooltip,
-  AnimatedBarSeries,
-} from "@visx/xychart";
+import { Axis, Grid, XYChart, AnimatedBarSeries } from "@visx/xychart";
 
 import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
@@ -30,25 +24,10 @@ const VisxBarChartComponent = ({
         xScale={{ type: "band" }}
         yScale={{ type: "linear" }}
       >
-        <AnimatedAxis orientation="bottom" />
-        <AnimatedGrid columns={false} numTicks={4} />
+        <Axis orientation="bottom" />
+        <Axis orientation="left" />
+        <Grid columns={false} numTicks={4} />
         <AnimatedBarSeries data={dataSet} dataKey="time" {...accessors} />
-        <Tooltip
-          snapTooltipToDatumX
-          snapTooltipToDatumY
-          showVerticalCrosshair
-          showSeriesGlyphs
-          renderTooltip={({ tooltipData, colorScale }: any) => (
-            <div>
-              <div style={{ color: colorScale(tooltipData.nearestDatum.key) }}>
-                {tooltipData.nearestDatum.key}
-              </div>
-              {accessors.xAccessor(tooltipData.nearestDatum.datum)}
-              {", "}
-              {accessors.yAccessor(tooltipData.nearestDatum.datum)}
-            </div>
-          )}
-        />
       </XYChart>
     </RenderTimingCounter>
   );

@@ -10,7 +10,7 @@ const RechartsBarChart = ({ dataSet, onFinish }: CommonChartProps) => {
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="time" />
         <YAxis />
-        <Bar dataKey="t_outside" fill="#8884d8" isAnimationActive={false} />
+        <Bar dataKey="t_outside" fill="#8884d8" isAnimationActive={true} />
       </BarChart>
     </RenderTimingCounter>
   );

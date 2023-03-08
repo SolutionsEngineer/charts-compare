@@ -14,7 +14,7 @@ const RechartsLineChart = ({ dataSet, onFinish }: CommonChartProps) => {
           type="monotone"
           dataKey="t_outside"
           stroke="#8884d8"
-          isAnimationActive={false}
+          isAnimationActive={true}
         />
       </LineChart>
     </RenderTimingCounter>
