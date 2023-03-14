@@ -67,7 +67,7 @@ const VictoryComposedMultiAxisChart = ({
             orientation="right"
             label="Insolation [W/m2]"
           />
-          <VictoryAxis fixLabelOverlap={true} tickCount={4} tick />
+          <VictoryAxis fixLabelOverlap={true} tickCount={4} />
           <VictoryLine
             animate={true}
             style={{

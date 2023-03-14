@@ -9,7 +9,7 @@ const accessors = {
   yAccessor: (d: ChartDataSource) => d.t_outside as never,
 };
 
-const VisxBarChartComponent = ({
+const VisxBarChart = ({
   dataSet,
   onFinish,
 }: {
@@ -17,7 +17,7 @@ const VisxBarChartComponent = ({
   onFinish: () => void;
 }) => {
   return (
-    <RenderTimingCounter id="VisxBarChartComponent" onFinish={onFinish}>
+    <RenderTimingCounter id="VisxBarChart" onFinish={onFinish}>
       <XYChart
         height={300}
         width={500}
@@ -27,10 +27,10 @@ const VisxBarChartComponent = ({
         <Axis orientation="bottom" />
         <Axis orientation="left" />
         <Grid columns={false} numTicks={4} />
-        <AnimatedBarSeries data={dataSet} dataKey="time" {...accessors} />
+        <AnimatedBarSeries data={dataSet} dataKey="outside" {...accessors} />
       </XYChart>
     </RenderTimingCounter>
   );
 };
 
-export default React.memo(VisxBarChartComponent);
+export default React.memo(VisxBarChart);

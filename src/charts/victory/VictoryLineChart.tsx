@@ -3,7 +3,7 @@ import { VictoryChart, VictoryLine } from "victory";
 import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
-const VictoryLineChartComponent = ({
+const VictoryLineChart = ({
   dataSet,
   onFinish,
 }: {
@@ -11,8 +11,8 @@ const VictoryLineChartComponent = ({
   onFinish: () => void;
 }) => {
   return (
-    <RenderTimingCounter id="VictoryLineChartComponent" onFinish={onFinish}>
-      <VictoryChart>
+    <RenderTimingCounter id="VictoryLineChart" onFinish={onFinish}>
+      <VictoryChart width={500} height={300}>
         <VictoryLine
           animate={true}
           style={{
@@ -28,4 +28,4 @@ const VictoryLineChartComponent = ({
   );
 };
 
-export default React.memo(VictoryLineChartComponent);
+export default React.memo(VictoryLineChart);

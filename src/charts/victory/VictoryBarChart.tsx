@@ -3,7 +3,7 @@ import { VictoryBar, VictoryChart, VictoryTheme } from "victory";
 import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
-const VictoryBarChartComponent = ({
+const VictoryBarChart = ({
   dataSet,
   onFinish,
 }: {
@@ -11,8 +11,8 @@ const VictoryBarChartComponent = ({
   onFinish: () => void;
 }) => {
   return (
-    <RenderTimingCounter id="VictoryBarChartComponent" onFinish={onFinish}>
-      <VictoryChart theme={VictoryTheme.material}>
+    <RenderTimingCounter id="VictoryBarChart" onFinish={onFinish}>
+      <VictoryChart width={500} height={300}>
         <VictoryBar
           animate={{
             duration: 2000,
@@ -31,4 +31,4 @@ const VictoryBarChartComponent = ({
   );
 };
 
-export default React.memo(VictoryBarChartComponent);
+export default React.memo(VictoryBarChart);

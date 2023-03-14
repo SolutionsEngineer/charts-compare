@@ -1,12 +1,26 @@
 import React from "react";
-import { CartesianGrid, Label, Line, LineChart, XAxis, YAxis } from "recharts";
+import {
+  Bar,
+  CartesianGrid,
+  ComposedChart,
+  Label,
+  Line,
+  XAxis,
+  YAxis,
+} from "recharts";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 import { CommonChartProps } from "../../types/CommonChartTypes";
 
-const RechartsLineChart = ({ dataSet, onFinish }: CommonChartProps) => {
+const RechartsComposedSingleAxisChart = ({
+  dataSet,
+  onFinish,
+}: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="RechartsLineChart" onFinish={onFinish}>
-      <LineChart width={500} height={300} data={dataSet}>
+    <RenderTimingCounter
+      id="RechartsComposedSingleAxisChart"
+      onFinish={onFinish}
+    >
+      <ComposedChart width={500} height={300} data={dataSet}>
         <XAxis dataKey="time" />
         <YAxis>
           <Label value="Temp [℃]" angle={-90} position="insideLeft" />
@@ -18,9 +32,10 @@ const RechartsLineChart = ({ dataSet, onFinish }: CommonChartProps) => {
           stroke="#8884d8"
           isAnimationActive={true}
         />
-      </LineChart>
+        <Bar dataKey="t_sensed" fill="#8884d8" isAnimationActive={true} />
+      </ComposedChart>
     </RenderTimingCounter>
   );
 };
 
-export default React.memo(RechartsLineChart);
+export default React.memo(RechartsComposedSingleAxisChart);

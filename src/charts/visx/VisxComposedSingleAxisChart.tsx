@@ -1,15 +1,26 @@
 import React from "react";
-import { Axis, Grid, XYChart, AnimatedLineSeries } from "@visx/xychart";
+import {
+  Axis,
+  Grid,
+  XYChart,
+  AnimatedLineSeries,
+  AnimatedBarSeries,
+} from "@visx/xychart";
 
 import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
-const accessors = {
+const lineAccessors = {
   xAccessor: (d: ChartDataSource) => new Date(d.time).toISOString(),
   yAccessor: (d: ChartDataSource) => d.t_outside as never,
 };
 
-const VisxLineChart = ({
+const barAccessors = {
+  xAccessor: (d: ChartDataSource) => new Date(d.time).toISOString(),
+  yAccessor: (d: ChartDataSource) => d.t_sensed as never,
+};
+
+const VisxComposedSingleAxisChart = ({
   dataSet,
   onFinish,
 }: {
@@ -17,7 +28,7 @@ const VisxLineChart = ({
   onFinish: () => void;
 }) => {
   return (
-    <RenderTimingCounter id="VisxLineChart" onFinish={onFinish}>
+    <RenderTimingCounter id="VisxComposedSingleAxisChart" onFinish={onFinish}>
       <XYChart
         height={300}
         width={500}
@@ -27,10 +38,15 @@ const VisxLineChart = ({
         <Axis orientation="bottom" numTicks={2} />
         <Axis orientation="left" numTicks={2} />
         <Grid columns={false} numTicks={2} />
-        <AnimatedLineSeries data={dataSet} dataKey="outside" {...accessors} />
+        <AnimatedLineSeries
+          data={dataSet}
+          dataKey="outside"
+          {...lineAccessors}
+        />
+        <AnimatedBarSeries data={dataSet} dataKey="sensed" {...barAccessors} />
       </XYChart>
     </RenderTimingCounter>
   );
 };
 
-export default React.memo(VisxLineChart);
+export default React.memo(VisxComposedSingleAxisChart);
