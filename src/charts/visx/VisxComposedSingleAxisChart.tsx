@@ -31,7 +31,7 @@ const VisxComposedSingleAxisChart = ({
     <RenderTimingCounter id="VisxComposedSingleAxisChart" onFinish={onFinish}>
       <XYChart
         height={300}
-        width={500}
+        width={900}
         xScale={{ type: "band" }}
         yScale={{ type: "linear" }}
       >

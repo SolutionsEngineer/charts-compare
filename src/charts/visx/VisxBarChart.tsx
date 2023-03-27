@@ -20,13 +20,13 @@ const VisxBarChart = ({
     <RenderTimingCounter id="VisxBarChart" onFinish={onFinish}>
       <XYChart
         height={300}
-        width={500}
-        xScale={{ type: "band" }}
+        width={900}
+        xScale={{ type: "band", padding: 0.2 }}
         yScale={{ type: "linear" }}
       >
-        <Axis orientation="bottom" />
-        <Axis orientation="left" />
-        <Grid columns={false} numTicks={4} />
+        <Axis orientation="bottom" numTicks={2} />
+        <Axis orientation="left" numTicks={2} />
+        <Grid columns={false} numTicks={2} />
         <AnimatedBarSeries data={dataSet} dataKey="outside" {...accessors} />
       </XYChart>
     </RenderTimingCounter>

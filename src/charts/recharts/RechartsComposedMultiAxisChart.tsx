@@ -21,20 +21,20 @@ const RechartsComposedMultiAxisChart = ({
       id="RechartsComposedMultiAxisChart"
       onFinish={onFinish}
     >
-      <ComposedChart width={500} height={300} data={dataSet}>
+      <ComposedChart width={900} height={300} data={dataSet}>
+        <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="time" />
         <YAxis yAxisId="temperature">
           <Label value="Temp [℃]" angle={-90} position="insideLeft" />
         </YAxis>
         <YAxis yAxisId="insolation" orientation="right">
           <Label
-            value="Insolation [W/m2]"
+            value="Insolation [W/m²]"
             angle={-90}
             position="insideTopRight"
             offset={10}
           />
         </YAxis>
-        <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
         <Line
           type="monotone"
           dataKey="t_sensed"

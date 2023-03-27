@@ -1,5 +1,11 @@
 import React from "react";
-import { VictoryBar, VictoryChart, VictoryTheme } from "victory";
+import {
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryLabel,
+  VictoryLegend,
+} from "victory";
 import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
@@ -12,21 +18,56 @@ const VictoryBarChart = ({
 }) => {
   return (
     <RenderTimingCounter id="VictoryBarChart" onFinish={onFinish}>
-      <VictoryChart width={500} height={300}>
-        <VictoryBar
-          animate={{
-            duration: 2000,
-            onLoad: { duration: 1000 },
-          }}
-          style={{
-            data: { stroke: "#c43a31" },
-            parent: { border: "1px solid #ccc" },
-          }}
-          data={dataSet}
-          x="time"
-          y="t_outside"
-        />
-      </VictoryChart>
+      <div style={{ width: 900, height: 300 }}>
+        <VictoryChart width={900} height={300}>
+          <VictoryAxis
+            fixLabelOverlap={true}
+            dependentAxis
+            axisLabelComponent={<VictoryLabel dy={-12} />}
+            label={"Temp [℃]"}
+            style={{
+              grid: {
+                stroke: "#cccccc",
+                strokeWidth: 1,
+                strokeDasharray: "5 5",
+              },
+            }}
+          />
+          <VictoryAxis
+            tickLabelComponent={<VictoryLabel dx={20} />}
+            fixLabelOverlap={true}
+            style={{
+              grid: {
+                stroke: "#cccccc",
+                strokeWidth: 1,
+                strokeDasharray: "5 5",
+              },
+            }}
+          />
+          <VictoryBar
+            animate={{
+              duration: 2000,
+              onLoad: { duration: 1000 },
+            }}
+            style={{
+              data: { fill: "blue" },
+              parent: { border: "1px solid #ccc" },
+            }}
+            data={dataSet}
+            x="time"
+            y="t_outside"
+          />
+          <VictoryLegend
+            x={400}
+            y={10}
+            centerTitle
+            orientation="horizontal"
+            gutter={20}
+            style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+            data={[{ name: "T_Outside", symbol: { fill: "blue" } }]}
+          />
+        </VictoryChart>
+      </div>
     </RenderTimingCounter>
   );
 };

@@ -3,6 +3,7 @@ import {
   VictoryAxis,
   VictoryBar,
   VictoryChart,
+  VictoryLabel,
   VictoryLegend,
   VictoryLine,
 } from "victory";
@@ -48,26 +49,46 @@ const VictoryComposedMultiAxisChart = ({
 
   return (
     <RenderTimingCounter id="VictoryComposedMultiAxisChart" onFinish={onFinish}>
-      <div style={{ width: 500, height: 300 }}>
-        <VictoryChart domain={{ y: [-1, 1] }}>
+      <div style={{ width: 900, height: 300 }}>
+        <VictoryChart width={900} height={300} domain={{ y: [-1, 1] }}>
           <VictoryAxis
             fixLabelOverlap={true}
             dependentAxis
+            axisLabelComponent={<VictoryLabel dy={-12} dx={30} />}
             key="temp"
             tickValues={tempTickValues}
             tickFormat={(t) => t * maxTemp}
             label={"Temp [℃]"}
+            style={{
+              grid: {
+                stroke: "#cccccc",
+                strokeWidth: 1,
+                strokeDasharray: "5 5",
+              },
+            }}
           />
           <VictoryAxis
             fixLabelOverlap={true}
             dependentAxis
+            axisLabelComponent={<VictoryLabel dy={12} dx={30} />}
             key={"insolation"}
             tickValues={insolationTickValues}
             tickFormat={(t) => t * maxInsolationHist}
             orientation="right"
-            label="Insolation [W/m2]"
+            label="Insolation [W/m²]"
           />
-          <VictoryAxis fixLabelOverlap={true} tickCount={4} />
+          <VictoryAxis
+            tickLabelComponent={<VictoryLabel dx={20} dy={95} />}
+            fixLabelOverlap={true}
+            tickCount={5}
+            style={{
+              grid: {
+                stroke: "#cccccc",
+                strokeWidth: 1,
+                strokeDasharray: "5 5",
+              },
+            }}
+          />
           <VictoryLine
             animate={true}
             style={{
@@ -105,8 +126,8 @@ const VictoryComposedMultiAxisChart = ({
             key="insolation"
           />
           <VictoryLegend
-            x={75}
-            y={225}
+            x={300}
+            y={10}
             centerTitle
             orientation="horizontal"
             gutter={20}
