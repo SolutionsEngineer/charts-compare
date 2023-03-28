@@ -6,6 +6,8 @@ import {
   AnimatedLineSeries,
   AnimatedBarSeries,
 } from "@visx/xychart";
+import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
+import { scaleOrdinal } from "@visx/scale";
 
 import { ChartDataSource } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
@@ -34,20 +36,25 @@ const VisxComposedMultiAxisChart = ({
 }) => {
   return (
     <RenderTimingCounter id="VisxComposedMultiAxisChart" onFinish={onFinish}>
-      <div style={{ position: "relative" }}>
+      <div style={{ position: "relative", width: 900 }}>
         <XYChart
           height={300}
           width={900}
           xScale={{ type: "band", padding: 0.4 }}
           yScale={{ type: "linear" }}
         >
-          <Axis orientation="bottom" numTicks={2} />
-          <Axis orientation="left" numTicks={2} />
-          <Grid columns={false} numTicks={2} />
+          <Axis
+            orientation="bottom"
+            numTicks={4}
+            tickFormat={(date) => new Date(date).toLocaleString()}
+          />
+          <Axis orientation="left" numTicks={4} label={"Insolation [W/m²]"} />
+          <Grid numTicks={4} />
           <AnimatedBarSeries
             data={dataSet}
             dataKey="insolation"
             {...insolationHistAccessors}
+            colorAccessor={() => "red"}
           />
         </XYChart>
         <div
@@ -65,18 +72,50 @@ const VisxComposedMultiAxisChart = ({
             xScale={{ type: "band" }}
             yScale={{ type: "linear" }}
           >
-            <Axis orientation="right" numTicks={2} />
+            <Axis orientation="right" numTicks={3} label={"Temp [℃]"} />
             <AnimatedLineSeries
               data={dataSet}
               dataKey="sensed"
               {...tSensedAccessors}
+              color="green"
             />
             <AnimatedLineSeries
               data={dataSet}
               dataKey="outside"
               {...tOutsideAccessors}
+              color="blue"
             />
           </XYChart>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          <LegendOrdinal
+            scale={scaleOrdinal({
+              domain: ["T_outside", "T_sensed", "Insolation"],
+              range: ["blue", "green", "red"],
+            })}
+          >
+            {(labels) => (
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                {labels.map((label, i) => (
+                  <LegendItem key={`legend-quantile-${i}`} margin="0 5px">
+                    <svg width={15} height={15}>
+                      <rect fill={label.value} width={15} height={15} />
+                    </svg>
+                    <LegendLabel align="left" margin="0 0 0 4px">
+                      {label.text}
+                    </LegendLabel>
+                  </LegendItem>
+                ))}
+              </div>
+            )}
+          </LegendOrdinal>
         </div>
       </div>
     </RenderTimingCounter>
