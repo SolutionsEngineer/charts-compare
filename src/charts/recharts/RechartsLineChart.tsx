@@ -26,7 +26,16 @@ const RechartsLineChart = ({ dataSet, onFinish }: CommonChartProps) => {
           stroke="#8884d8"
           isAnimationActive={true}
         />
-        <Legend />
+        <Legend
+          payload={[
+            {
+              value: "Temperatura zewnętrzna",
+              id: "t_outside",
+              type: "line",
+              color: "#8884d8",
+            },
+          ]}
+        />
       </LineChart>
     </RenderTimingCounter>
   );

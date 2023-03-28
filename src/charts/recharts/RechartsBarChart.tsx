@@ -21,7 +21,16 @@ const RechartsBarChart = ({ dataSet, onFinish }: CommonChartProps) => {
           <Label value="Temp [℃]" angle={-90} position="insideLeft" />
         </YAxis>
         <Bar dataKey="t_outside" fill="#8884d8" isAnimationActive={true} />
-        <Legend />
+        <Legend
+          payload={[
+            {
+              value: "Temperatura zewnętrzna",
+              id: "t_outside",
+              type: "rect",
+              color: "#8884d8",
+            },
+          ]}
+        />
       </BarChart>
     </RenderTimingCounter>
   );

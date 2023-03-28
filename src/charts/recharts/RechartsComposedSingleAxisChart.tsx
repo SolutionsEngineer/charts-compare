@@ -34,7 +34,22 @@ const RechartsComposedSingleAxisChart = ({
           isAnimationActive={true}
         />
         <Bar dataKey="t_sensed" fill="#8884d8" isAnimationActive={true} />
-        <Legend />
+        <Legend
+          payload={[
+            {
+              value: "Temperatura zewnętrzna",
+              id: "t_outside",
+              type: "line",
+              color: "#8884d8",
+            },
+            {
+              value: "Temperatura odczuwalna",
+              id: "t_outside",
+              type: "rect",
+              color: "#8884d8",
+            },
+          ]}
+        />
       </ComposedChart>
     </RenderTimingCounter>
   );

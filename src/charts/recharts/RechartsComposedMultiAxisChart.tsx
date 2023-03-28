@@ -55,7 +55,28 @@ const RechartsComposedMultiAxisChart = ({
           isAnimationActive={true}
           yAxisId="insolation"
         />
-        <Legend />
+        <Legend
+          payload={[
+            {
+              value: "Temperatura zewnętrzna",
+              id: "t_outside",
+              type: "line",
+              color: "#82ca9d",
+            },
+            {
+              value: "Temperatura odczuwalna",
+              id: "t_outside",
+              type: "line",
+              color: "#8884d8",
+            },
+            {
+              value: "Nasłonecznienie",
+              id: "insolation",
+              type: "rect",
+              color: "#8884d8",
+            },
+          ]}
+        />
       </ComposedChart>
     </RenderTimingCounter>
   );
