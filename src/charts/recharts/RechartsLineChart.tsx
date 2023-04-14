@@ -33,6 +33,7 @@ const RechartsLineChart = ({
           dataKey="t_outside"
           stroke="#8884d8"
           isAnimationActive={animated}
+          animationDuration={1000}
         />
         <Legend
           payload={[
