@@ -16,7 +16,6 @@ type RenderTimingCounterProps = {
 };
 
 const MAX_ALLOWED_RENDER_PAUSE_TIME_MS = 2000;
-// const MAX_ALLOWED_RENDER_PAUSE_TIME_MS = 999999999;
 
 export default function RenderTimingCounter({
   id,

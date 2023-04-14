@@ -100,8 +100,11 @@ const VisxComposedSingleAxisChart = ({
         >
           {(labels) => (
             <div style={{ display: "flex", flexDirection: "row" }}>
-              {labels.map((label, i) => (
-                <LegendItem key={`legend-quantile-${i}`} margin="0 5px">
+              {labels.map((label) => (
+                <LegendItem
+                  key={`legend-quantile-${label.text}-${label.index}`}
+                  margin="0 5px"
+                >
                   <svg width={15} height={15}>
                     <rect fill={label.value} width={15} height={15} />
                   </svg>
