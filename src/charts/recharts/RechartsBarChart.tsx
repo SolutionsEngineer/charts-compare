@@ -18,7 +18,7 @@ const RechartsBarChart = ({ dataSet, onFinish }: CommonChartProps) => {
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="time" />
         <YAxis>
-          <Label value="Temp [℃]" angle={-90} position="insideLeft" />
+          <Label value="Temp. [℃]" angle={-90} position="insideLeft" />
         </YAxis>
         <Bar dataKey="t_outside" fill="#8884d8" isAnimationActive={true} />
         <Legend

@@ -40,7 +40,7 @@ const VisxLineChart = ({
             numTicks={4}
             tickFormat={(date) => new Date(date).toLocaleString()}
           />
-          <Axis orientation="left" numTicks={4} label={"Temp [℃]"} />
+          <Axis orientation="left" numTicks={4} label={"Temp. [℃]"} />
           <Grid numTicks={4} />
           <AnimatedLineSeries
             data={dataSet}
@@ -51,7 +51,7 @@ const VisxLineChart = ({
         </XYChart>
         <LegendOrdinal
           scale={scaleOrdinal({
-            domain: ["T_outside"],
+            domain: ["Temperatura zewnętrzna"],
             range: ["blue"],
           })}
         >

@@ -51,7 +51,7 @@ const VisxComposedSingleAxisChart = ({
             numTicks={4}
             tickFormat={(date) => new Date(date).toLocaleString()}
           />
-          <Axis orientation="left" numTicks={4} label={"Temp [℃]"} />
+          <Axis orientation="left" numTicks={4} label={"Temp. [℃]"} />
           <Grid numTicks={4} />
           <AnimatedLineSeries
             data={dataSet}
@@ -68,7 +68,7 @@ const VisxComposedSingleAxisChart = ({
         </XYChart>
         <LegendOrdinal
           scale={scaleOrdinal({
-            domain: ["T_outside", "T_sensed"],
+            domain: ["Temperatura zewnętrzna", "Temperatura odczuwalna"],
             range: ["blue", "green"],
           })}
         >

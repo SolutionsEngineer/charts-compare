@@ -28,7 +28,7 @@ const VictoryComposedSingleAxisChart = ({
             fixLabelOverlap={true}
             dependentAxis
             axisLabelComponent={<VictoryLabel dy={-12} />}
-            label={"Temp [℃]"}
+            label={"Temp. [℃]"}
             style={{
               grid: {
                 stroke: "#cccccc",
@@ -72,15 +72,15 @@ const VictoryComposedSingleAxisChart = ({
             y="t_sensed"
           />
           <VictoryLegend
-            x={350}
+            x={300}
             y={10}
             centerTitle
             orientation="horizontal"
             gutter={20}
             style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
             data={[
-              { name: "T_Sensed", symbol: { fill: "green" } },
-              { name: "T_Outside", symbol: { fill: "blue" } },
+              { name: "Temperatura odczuwalna   ", symbol: { fill: "green" } },
+              { name: "Temperatura zewnętrzna   ", symbol: { fill: "blue" } },
             ]}
           />
         </VictoryChart>

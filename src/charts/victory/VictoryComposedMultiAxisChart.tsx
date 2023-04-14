@@ -54,11 +54,11 @@ const VictoryComposedMultiAxisChart = ({
           <VictoryAxis
             fixLabelOverlap={true}
             dependentAxis
-            axisLabelComponent={<VictoryLabel dy={-12} dx={30} />}
+            axisLabelComponent={<VictoryLabel dy={-12} dx={10} />}
             key="temp"
             tickValues={tempTickValues}
             tickFormat={(t) => t * maxTemp}
-            label={"Temp [℃]"}
+            label={"Temp. [℃]"}
             style={{
               grid: {
                 stroke: "#cccccc",
@@ -70,12 +70,12 @@ const VictoryComposedMultiAxisChart = ({
           <VictoryAxis
             fixLabelOverlap={true}
             dependentAxis
-            axisLabelComponent={<VictoryLabel dy={12} dx={30} />}
+            axisLabelComponent={<VictoryLabel dy={12} dx={10} />}
             key={"insolation"}
             tickValues={insolationTickValues}
             tickFormat={(t) => t * maxInsolationHist}
             orientation="right"
-            label="Insolation [W/m²]"
+            label="Nasłonecznienie [W/m²]"
           />
           <VictoryAxis
             tickLabelComponent={<VictoryLabel dx={20} dy={95} />}
@@ -126,16 +126,16 @@ const VictoryComposedMultiAxisChart = ({
             key="insolation"
           />
           <VictoryLegend
-            x={300}
+            x={200}
             y={10}
             centerTitle
             orientation="horizontal"
             gutter={20}
             style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
             data={[
-              { name: "T_Sensed", symbol: { fill: "green" } },
-              { name: "T_Outside", symbol: { fill: "blue" } },
-              { name: "Insulation", symbol: { fill: "red" } },
+              { name: "Temperatura odczuwalna   ", symbol: { fill: "green" } },
+              { name: "Temperatura zewnętrzna   ", symbol: { fill: "blue" } },
+              { name: "Nasłonecznienie", symbol: { fill: "red" } },
             ]}
           />
         </VictoryChart>

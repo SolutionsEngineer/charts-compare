@@ -25,7 +25,7 @@ const RechartsComposedSingleAxisChart = ({
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="time" />
         <YAxis>
-          <Label value="Temp [℃]" angle={-90} position="insideLeft" />
+          <Label value="Temp. [℃]" angle={-90} position="insideLeft" />
         </YAxis>
         <Line
           type="monotone"

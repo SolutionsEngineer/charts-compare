@@ -48,7 +48,11 @@ const VisxComposedMultiAxisChart = ({
             numTicks={4}
             tickFormat={(date) => new Date(date).toLocaleString()}
           />
-          <Axis orientation="left" numTicks={4} label={"Insolation [W/m²]"} />
+          <Axis
+            orientation="left"
+            numTicks={4}
+            label={"Nasłonecznienie [W/m²]"}
+          />
           <Grid numTicks={4} />
           <AnimatedBarSeries
             data={dataSet}
@@ -72,7 +76,7 @@ const VisxComposedMultiAxisChart = ({
             xScale={{ type: "band" }}
             yScale={{ type: "linear" }}
           >
-            <Axis orientation="right" numTicks={3} label={"Temp [℃]"} />
+            <Axis orientation="right" numTicks={3} label={"Temp. [℃]"} />
             <AnimatedLineSeries
               data={dataSet}
               dataKey="sensed"
@@ -97,7 +101,11 @@ const VisxComposedMultiAxisChart = ({
         >
           <LegendOrdinal
             scale={scaleOrdinal({
-              domain: ["T_outside", "T_sensed", "Insolation"],
+              domain: [
+                "Temperatura zewnętrzna",
+                "Temperatura odczuwalna",
+                "Nasłonecznienie",
+              ],
               range: ["blue", "green", "red"],
             })}
           >

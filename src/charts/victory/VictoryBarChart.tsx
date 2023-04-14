@@ -24,7 +24,7 @@ const VictoryBarChart = ({
             fixLabelOverlap={true}
             dependentAxis
             axisLabelComponent={<VictoryLabel dy={-12} />}
-            label={"Temp [℃]"}
+            label={"Temp. [℃]"}
             style={{
               grid: {
                 stroke: "#cccccc",
@@ -58,13 +58,15 @@ const VictoryBarChart = ({
             y="t_outside"
           />
           <VictoryLegend
-            x={400}
+            x={375}
             y={10}
             centerTitle
             orientation="horizontal"
             gutter={20}
             style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
-            data={[{ name: "T_Outside", symbol: { fill: "blue" } }]}
+            data={[
+              { name: "Temperatura zewnętrzna   ", symbol: { fill: "blue" } },
+            ]}
           />
         </VictoryChart>
       </div>

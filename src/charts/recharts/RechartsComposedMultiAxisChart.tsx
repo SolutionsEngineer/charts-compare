@@ -25,11 +25,11 @@ const RechartsComposedMultiAxisChart = ({
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="time" />
         <YAxis yAxisId="temperature">
-          <Label value="Temp [℃]" angle={-90} position="insideLeft" />
+          <Label value="Temp. [℃]" angle={-90} position="insideLeft" />
         </YAxis>
         <YAxis yAxisId="insolation" orientation="right">
           <Label
-            value="Insolation [W/m²]"
+            value="Nasłonecznienie [W/m²]"
             angle={-90}
             position="insideTopRight"
             offset={10}

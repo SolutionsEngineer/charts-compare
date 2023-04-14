@@ -21,54 +21,136 @@ type ChartGeneratorProps = {
 };
 
 const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
-  const [state, updateState] = useState<number>(0);
+  const [renderIteration, updateRenderIteration] = useState<number>(0);
 
-  const forceUpdate = useCallback(
-    () => updateState((prevState) => prevState + 1),
+  const forceIterationUpdate = useCallback(
+    () => updateRenderIteration((prevState) => prevState + 1),
     []
   );
 
-  const debouncedUpdateHandler = useMemo(
-    () => debounce(forceUpdate, 1000),
-    [forceUpdate]
+  const debouncedIterationUpdateHandler = useMemo(
+    () => debounce(forceIterationUpdate, 1000),
+    [forceIterationUpdate]
   );
 
   const dataSet = useMemo(() => DailyWeather, []);
 
-  return (
-    <div key={state}>
-      <RechartsLineChart dataSet={dataSet} onFinish={debouncedUpdateHandler} />
-      <RechartsBarChart dataSet={dataSet} onFinish={debouncedUpdateHandler} />
-      <RechartsComposedSingleAxisChart
-        dataSet={dataSet}
-        onFinish={debouncedUpdateHandler}
-      />
-      <RechartsComposedMultiAxisChart
-        dataSet={dataSet}
-        onFinish={debouncedUpdateHandler}
-      />
-      <VictoryLineChart dataSet={dataSet} onFinish={debouncedUpdateHandler} />
-      <VictoryBarChart dataSet={dataSet} onFinish={debouncedUpdateHandler} />
-      <VictoryComposedSingleAxisChart
-        dataSet={dataSet}
-        onFinish={debouncedUpdateHandler}
-      />
-      <VictoryComposedMultiAxisChart
-        dataSet={dataSet}
-        onFinish={debouncedUpdateHandler}
-      />
-      <VisxLineChart dataSet={dataSet} onFinish={debouncedUpdateHandler} />
-      <VisxBarChart dataSet={dataSet} onFinish={debouncedUpdateHandler} />
-      <VisxComposedSingleAxisChart
-        dataSet={dataSet}
-        onFinish={debouncedUpdateHandler}
-      />
-      <VisxComposedMultiAxisChart
-        dataSet={dataSet}
-        onFinish={debouncedUpdateHandler}
-      />
-    </div>
-  );
+  const properRechartsChart = useMemo(() => {
+    switch (selectedChart?.chartType) {
+      case "LineChart":
+        return (
+          <RechartsLineChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "BarChart":
+        return (
+          <RechartsBarChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "ComposedSingleAxisChart":
+        return (
+          <RechartsComposedSingleAxisChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "ComposedMultiAxisChart":
+        return (
+          <RechartsComposedMultiAxisChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+    }
+  }, [dataSet, debouncedIterationUpdateHandler, selectedChart?.chartType]);
+
+  const properVictoryChart = useMemo(() => {
+    switch (selectedChart?.chartType) {
+      case "LineChart":
+        return (
+          <VictoryLineChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "BarChart":
+        return (
+          <VictoryBarChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "ComposedSingleAxisChart":
+        return (
+          <VictoryComposedSingleAxisChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "ComposedMultiAxisChart":
+        return (
+          <VictoryComposedMultiAxisChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+    }
+  }, [dataSet, debouncedIterationUpdateHandler, selectedChart?.chartType]);
+
+  const properVisxChart = useMemo(() => {
+    switch (selectedChart?.chartType) {
+      case "LineChart":
+        return (
+          <VisxLineChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "BarChart":
+        return (
+          <VisxBarChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "ComposedSingleAxisChart":
+        return (
+          <VisxComposedSingleAxisChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+      case "ComposedMultiAxisChart":
+        return (
+          <VisxComposedMultiAxisChart
+            dataSet={dataSet}
+            onFinish={debouncedIterationUpdateHandler}
+          />
+        );
+    }
+  }, [dataSet, debouncedIterationUpdateHandler, selectedChart?.chartType]);
+
+  const properChart = useMemo(() => {
+    switch (selectedChart?.library) {
+      case "Recharts":
+        return properRechartsChart;
+      case "Victory":
+        return properVictoryChart;
+      case "Visx":
+        return properVisxChart;
+    }
+  }, [
+    properRechartsChart,
+    properVictoryChart,
+    properVisxChart,
+    selectedChart?.library,
+  ]);
+
+  return <div key={renderIteration}>{properChart}</div>;
 };
 
 export default React.memo(ChartGenerator);

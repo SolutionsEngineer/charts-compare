@@ -1,5 +1,6 @@
 export enum ChartTypeEnum {
   LineChart = 'LineChart',
   BarChart = 'BarChart',
-  ComposedLineBarChart = 'ComposedLineBarChart' 
+  ComposedSingleAxisChart = 'ComposedSingleAxisChart',
+  ComposedMultiAxisChart = 'ComposedMultiAxisChart'
 }
