@@ -30,7 +30,7 @@ const MainPage: () => ReactElement = () => {
             />
           </div>
         </Content>
-        <Footer style={{ textAlign: "center" }}>Chutkowski Daniel ©</Footer>
+        <Footer style={{ textAlign: "center" }}>Chutkowski Daniel©</Footer>
       </Layout>
     </Layout>
   );
