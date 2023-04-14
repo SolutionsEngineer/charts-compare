@@ -35,7 +35,7 @@ const VictoryComposedMultiAxisChart = ({
   const tempTickValues = useMemo(
     () =>
       [...dataSet.map((d) => d.t_outside), ...dataSet.map((d) => d.t_sensed)]
-        .sort()
+        .sort((a, b) => a - b)
         .map((t) => Math.round(t / (maxTemp || 1))),
     [dataSet, maxTemp]
   );
@@ -43,7 +43,7 @@ const VictoryComposedMultiAxisChart = ({
   const insolationTickValues = useMemo(
     () =>
       [...dataSet.map((d) => d.insolation_hist)]
-        .sort()
+        .sort((a, b) => a - b)
         .map((i) => Math.round(i / (maxInsolationHist || 1))),
     [dataSet, maxInsolationHist]
   );
