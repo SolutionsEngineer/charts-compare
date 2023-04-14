@@ -7,10 +7,11 @@ const { Header, Content, Footer } = Layout;
 
 const MainPage: () => ReactElement = () => {
   const [selectedChart, setSelectedChart] = useState<SelectedChart>();
+  const [animated, setAnimated] = useState(true);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <NavBar onSelect={setSelectedChart} />
+      <NavBar onSelect={setSelectedChart} setAnimated={setAnimated} />
       <Layout className="site-layout">
         <Header className="site-layout-background" style={{ padding: 0 }} />
         <Content style={{ margin: "0 16px" }}>
@@ -18,7 +19,15 @@ const MainPage: () => ReactElement = () => {
             className="site-layout-background"
             style={{ padding: 24, minHeight: 360 }}
           >
-            <ChartGenerator selectedChart={selectedChart} />
+            <ChartGenerator
+              selectedChart={selectedChart}
+              animated={animated}
+              key={
+                selectedChart?.library ??
+                "lib" + selectedChart?.chartType ??
+                "type" + String(animated)
+              }
+            />
           </div>
         </Content>
         <Footer style={{ textAlign: "center" }}>Chutkowski Daniel©</Footer>

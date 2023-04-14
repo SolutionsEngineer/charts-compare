@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { Layout, Menu, MenuProps } from "antd";
+import { Layout, Menu, MenuProps, Switch } from "antd";
 import { LibraryNameEnum } from "../../enums/LibraryNameEnum";
 import RechartsLogo from "../../logos/RechartsLogo";
 import { ChartTypeEnum } from "../../enums/ChartTypeEnum";
-import AtndChartLogo from "../../logos/AntdChartLogo";
 import VictoryChartsLogo from "../../logos/VictoryChartsLogo";
 
 import styles from "./NavBar.styles.module.scss";
+import VisxLogo from "../../logos/VisxLogo";
+
+import { startCase } from "lodash";
 
 const { Sider } = Layout;
 
@@ -26,83 +28,116 @@ export type SelectedChart = {
 
 type NavBarProps = {
   onSelect: (selectedChart: SelectedChart) => void;
+  setAnimated: (animated: boolean) => void;
 };
 
-const NavBar = ({ onSelect }: NavBarProps) => {
+const NavBar = ({ onSelect, setAnimated }: NavBarProps) => {
   const [collapsed, setCollapsed] = useState(false);
 
-  const antDesignNestedNavItems: NavItemType[] = [
+  const visxNestedNavItems: NavItemType[] = [
     {
-      key: LibraryNameEnum.AntDesign + ChartTypeEnum.LineChart,
-      label: LibraryNameEnum.AntDesign + ChartTypeEnum.LineChart,
+      key: LibraryNameEnum.Visx + ChartTypeEnum.LineChart,
+      label: startCase(ChartTypeEnum.LineChart),
     },
     {
-      key: LibraryNameEnum.AntDesign + ChartTypeEnum.AreaChart,
-      label: LibraryNameEnum.AntDesign + ChartTypeEnum.AreaChart,
+      key: LibraryNameEnum.Visx + ChartTypeEnum.BarChart,
+      label: startCase(ChartTypeEnum.BarChart),
+    },
+    {
+      key: LibraryNameEnum.Visx + ChartTypeEnum.ComposedSingleAxisChart,
+      label: startCase(ChartTypeEnum.ComposedSingleAxisChart),
+    },
+    {
+      key: LibraryNameEnum.Visx + ChartTypeEnum.ComposedMultiAxisChart,
+      label: startCase(ChartTypeEnum.ComposedMultiAxisChart),
     },
   ];
 
   const rechartsNestedNavItems: NavItemType[] = [
     {
       key: LibraryNameEnum.Recharts + ChartTypeEnum.LineChart,
-      label: LibraryNameEnum.Recharts + ChartTypeEnum.LineChart,
+      label: startCase(ChartTypeEnum.LineChart),
     },
     {
-      key: LibraryNameEnum.Recharts + ChartTypeEnum.AreaChart,
-      label: LibraryNameEnum.Recharts + ChartTypeEnum.AreaChart,
+      key: LibraryNameEnum.Recharts + ChartTypeEnum.BarChart,
+      label: startCase(ChartTypeEnum.BarChart),
+    },
+    {
+      key: LibraryNameEnum.Recharts + ChartTypeEnum.ComposedSingleAxisChart,
+      label: startCase(ChartTypeEnum.ComposedSingleAxisChart),
+    },
+    {
+      key: LibraryNameEnum.Recharts + ChartTypeEnum.ComposedMultiAxisChart,
+      label: startCase(ChartTypeEnum.ComposedMultiAxisChart),
     },
   ];
 
   const victoryNestedNavItems: NavItemType[] = [
     {
       key: LibraryNameEnum.Victory + ChartTypeEnum.LineChart,
-      label: LibraryNameEnum.Victory + ChartTypeEnum.LineChart,
+      label: startCase(ChartTypeEnum.LineChart),
     },
     {
-      key: LibraryNameEnum.Victory + ChartTypeEnum.AreaChart,
-      label: LibraryNameEnum.Victory + ChartTypeEnum.AreaChart,
+      key: LibraryNameEnum.Victory + ChartTypeEnum.BarChart,
+      label: startCase(ChartTypeEnum.BarChart),
+    },
+    {
+      key: LibraryNameEnum.Victory + ChartTypeEnum.ComposedSingleAxisChart,
+      label: startCase(ChartTypeEnum.ComposedSingleAxisChart),
+    },
+    {
+      key: LibraryNameEnum.Victory + ChartTypeEnum.ComposedMultiAxisChart,
+      label: startCase(ChartTypeEnum.ComposedMultiAxisChart),
     },
   ];
 
   const mainNavItems: NavItemType[] = [
     {
-      key: LibraryNameEnum.AntDesign,
-      label: LibraryNameEnum.AntDesign,
-      icon: AtndChartLogo,
-      children: antDesignNestedNavItems,
-    },
-    {
       key: LibraryNameEnum.Recharts,
-      label: LibraryNameEnum.Recharts,
+      label: startCase(LibraryNameEnum.Recharts),
       icon: RechartsLogo,
       children: rechartsNestedNavItems,
     },
     {
       key: LibraryNameEnum.Victory,
-      label: LibraryNameEnum.Victory,
+      label: startCase(LibraryNameEnum.Victory),
       icon: VictoryChartsLogo,
       children: victoryNestedNavItems,
+    },
+    {
+      key: LibraryNameEnum.Visx,
+      label: startCase(LibraryNameEnum.Visx),
+      icon: VisxLogo,
+      children: visxNestedNavItems,
     },
   ];
   return (
     <Sider
       className={styles.navWrapper}
       collapsedWidth={100}
+      width={240}
       collapsible
       collapsed={collapsed}
       onCollapse={(value) => setCollapsed(value)}
     >
       <div className={styles.navHeaderText}>Charts Compare</div>
+      <div className={styles.animatedSliderWrapper}>
+        <Switch defaultChecked onChange={setAnimated} />
+        <span>Animated</span>
+      </div>
       <Menu
         theme="dark"
         mode="inline"
         items={mainNavItems}
-        onSelect={(info) =>
+        onSelect={(info) => {
           onSelect({
-            chartType: info.keyPath[0] as keyof typeof ChartTypeEnum,
+            chartType: info.keyPath[0].replace(
+              info.keyPath[1],
+              ""
+            ) as keyof typeof ChartTypeEnum,
             library: info.keyPath[1] as keyof typeof LibraryNameEnum,
-          })
-        }
+          });
+        }}
       />
     </Sider>
   );
