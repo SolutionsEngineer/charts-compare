@@ -48,4 +48,18 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+
+  .animatedSliderWrapper {
+    display: flex;
+    gap: 10px;
+    height: 48px;
+    width: fit-content;
+    overflow: hidden;
+    white-space: pre;
+    user-select: none;
+    padding-top: 12px;
+    padding-left: 24px;
+    font-size: 1em;
+    color: white;
+  }
 }

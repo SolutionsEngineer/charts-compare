@@ -6,18 +6,16 @@ import {
   VictoryLabel,
   VictoryLegend,
 } from "victory";
-import { ChartDataSource } from "../../types/CommonChartTypes";
+import { CommonChartProps } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
-const VictoryBarChart = ({
-  dataSet,
-  onFinish,
-}: {
-  dataSet: ChartDataSource[];
-  onFinish: () => void;
-}) => {
+const VictoryBarChart = ({ dataSet, animated, onFinish }: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="VictoryBarChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="VictoryBarChart"
+      key="VictoryBarChart"
+      onFinish={onFinish}
+    >
       <div style={{ width: 900, height: 300 }}>
         <VictoryChart width={900} height={300}>
           <VictoryAxis
@@ -45,10 +43,14 @@ const VictoryBarChart = ({
             }}
           />
           <VictoryBar
-            animate={{
-              duration: 2000,
-              onLoad: { duration: 1000 },
-            }}
+            animate={
+              animated
+                ? {
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }
+                : false
+            }
             style={{
               data: { fill: "blue" },
               parent: { border: "1px solid #ccc" },

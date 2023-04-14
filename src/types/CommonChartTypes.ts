@@ -16,5 +16,6 @@ export type ChartDataSource = {
 
 export type CommonChartProps = {
   dataSet: ChartDataSource[];
+  animated: boolean
   onFinish: () => void;
 }

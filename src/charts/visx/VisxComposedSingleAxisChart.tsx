@@ -5,11 +5,16 @@ import {
   XYChart,
   AnimatedLineSeries,
   AnimatedBarSeries,
+  LineSeries,
+  BarSeries,
 } from "@visx/xychart";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import { scaleOrdinal } from "@visx/scale";
 
-import { ChartDataSource } from "../../types/CommonChartTypes";
+import {
+  ChartDataSource,
+  CommonChartProps,
+} from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const lineAccessors = {
@@ -24,13 +29,15 @@ const barAccessors = {
 
 const VisxComposedSingleAxisChart = ({
   dataSet,
+  animated,
   onFinish,
-}: {
-  dataSet: ChartDataSource[];
-  onFinish: () => void;
-}) => {
+}: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="VisxComposedSingleAxisChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="VisxComposedSingleAxisChart"
+      key="VisxComposedSingleAxisChart"
+      onFinish={onFinish}
+    >
       <div
         style={{
           display: "flex",
@@ -53,18 +60,37 @@ const VisxComposedSingleAxisChart = ({
           />
           <Axis orientation="left" numTicks={4} label={"Temp. [℃]"} />
           <Grid numTicks={4} />
-          <AnimatedLineSeries
-            data={dataSet}
-            dataKey="outside"
-            {...lineAccessors}
-            color="blue"
-          />
-          <AnimatedBarSeries
-            data={dataSet}
-            dataKey="sensed"
-            {...barAccessors}
-            colorAccessor={() => "green"}
-          />
+          {animated ? (
+            <>
+              <AnimatedLineSeries
+                data={dataSet}
+                dataKey="outside"
+                {...lineAccessors}
+                color="blue"
+              />
+              <AnimatedBarSeries
+                data={dataSet}
+                dataKey="sensed"
+                {...barAccessors}
+                colorAccessor={() => "green"}
+              />
+            </>
+          ) : (
+            <>
+              <LineSeries
+                data={dataSet}
+                dataKey="outside"
+                {...lineAccessors}
+                color="blue"
+              />
+              <BarSeries
+                data={dataSet}
+                dataKey="sensed"
+                {...barAccessors}
+                colorAccessor={() => "green"}
+              />
+            </>
+          )}
         </XYChart>
         <LegendOrdinal
           scale={scaleOrdinal({

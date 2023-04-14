@@ -7,16 +7,17 @@ import {
   VictoryLegend,
   VictoryLine,
 } from "victory";
-import { ChartDataSource } from "../../types/CommonChartTypes";
+import {
+  ChartDataSource,
+  CommonChartProps,
+} from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const VictoryComposedMultiAxisChart = ({
   dataSet,
+  animated,
   onFinish,
-}: {
-  dataSet: ChartDataSource[];
-  onFinish: () => void;
-}) => {
+}: CommonChartProps) => {
   const maxInsolationHist = useMemo(
     () => Math.max(...dataSet.map((d) => d.insolation_hist)),
     [dataSet]
@@ -48,7 +49,11 @@ const VictoryComposedMultiAxisChart = ({
   );
 
   return (
-    <RenderTimingCounter id="VictoryComposedMultiAxisChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="VictoryComposedMultiAxisChart"
+      key="VictoryComposedMultiAxisChart"
+      onFinish={onFinish}
+    >
       <div style={{ width: 900, height: 300 }}>
         <VictoryChart width={900} height={300} domain={{ y: [-1, 1] }}>
           <VictoryAxis
@@ -90,7 +95,14 @@ const VictoryComposedMultiAxisChart = ({
             }}
           />
           <VictoryLine
-            animate={true}
+            animate={
+              animated
+                ? {
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }
+                : false
+            }
             style={{
               data: { stroke: "blue" },
               parent: { border: "1px solid #ccc" },
@@ -101,7 +113,14 @@ const VictoryComposedMultiAxisChart = ({
             key="temp"
           />
           <VictoryLine
-            animate={true}
+            animate={
+              animated
+                ? {
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }
+                : false
+            }
             style={{
               data: { stroke: "green" },
               parent: { border: "1px solid #ccc" },
@@ -112,10 +131,14 @@ const VictoryComposedMultiAxisChart = ({
             key="temp"
           />
           <VictoryBar
-            animate={{
-              duration: 2000,
-              onLoad: { duration: 1000 },
-            }}
+            animate={
+              animated
+                ? {
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }
+                : false
+            }
             style={{
               data: { fill: "red" },
               parent: { border: "1px solid #ccc" },

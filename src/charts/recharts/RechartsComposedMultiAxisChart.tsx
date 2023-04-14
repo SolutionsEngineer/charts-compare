@@ -14,11 +14,13 @@ import { CommonChartProps } from "../../types/CommonChartTypes";
 
 const RechartsComposedMultiAxisChart = ({
   dataSet,
+  animated,
   onFinish,
 }: CommonChartProps) => {
   return (
     <RenderTimingCounter
       id="RechartsComposedMultiAxisChart"
+      key="RechartsComposedMultiAxisChart"
       onFinish={onFinish}
     >
       <ComposedChart width={900} height={300} data={dataSet}>
@@ -39,20 +41,20 @@ const RechartsComposedMultiAxisChart = ({
           type="monotone"
           dataKey="t_sensed"
           stroke="#8884d8"
-          isAnimationActive={true}
+          isAnimationActive={animated}
           yAxisId="temperature"
         />
         <Line
           type="monotone"
           dataKey="t_outside"
           stroke="#82ca9d"
-          isAnimationActive={true}
+          isAnimationActive={animated}
           yAxisId="temperature"
         />
         <Bar
           dataKey="insolation_hist"
           fill="#8884d8"
-          isAnimationActive={true}
+          isAnimationActive={animated}
           yAxisId="insolation"
         />
         <Legend

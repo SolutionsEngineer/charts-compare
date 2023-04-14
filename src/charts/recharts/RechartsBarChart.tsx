@@ -11,16 +11,24 @@ import {
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 import { CommonChartProps } from "../../types/CommonChartTypes";
 
-const RechartsBarChart = ({ dataSet, onFinish }: CommonChartProps) => {
+const RechartsBarChart = ({
+  dataSet,
+  animated,
+  onFinish,
+}: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="RechartsBarChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="RechartsBarChart"
+      key="RechartsBarChart"
+      onFinish={onFinish}
+    >
       <BarChart width={900} height={300} data={dataSet}>
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="time" />
         <YAxis>
           <Label value="Temp. [℃]" angle={-90} position="insideLeft" />
         </YAxis>
-        <Bar dataKey="t_outside" fill="#8884d8" isAnimationActive={true} />
+        <Bar dataKey="t_outside" fill="#8884d8" isAnimationActive={animated} />
         <Legend
           payload={[
             {

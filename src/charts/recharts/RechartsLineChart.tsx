@@ -11,9 +11,17 @@ import {
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 import { CommonChartProps } from "../../types/CommonChartTypes";
 
-const RechartsLineChart = ({ dataSet, onFinish }: CommonChartProps) => {
+const RechartsLineChart = ({
+  dataSet,
+  animated,
+  onFinish,
+}: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="RechartsLineChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="RechartsLineChart"
+      key="RechartsLineChart"
+      onFinish={onFinish}
+    >
       <LineChart width={900} height={300} data={dataSet}>
         <CartesianGrid strokeDasharray="5 5" />
         <XAxis dataKey="time" />
@@ -24,7 +32,7 @@ const RechartsLineChart = ({ dataSet, onFinish }: CommonChartProps) => {
           type="monotone"
           dataKey="t_outside"
           stroke="#8884d8"
-          isAnimationActive={true}
+          isAnimationActive={animated}
         />
         <Legend
           payload={[

@@ -5,11 +5,16 @@ import {
   XYChart,
   AnimatedLineSeries,
   AnimatedBarSeries,
+  LineSeries,
+  BarSeries,
 } from "@visx/xychart";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import { scaleOrdinal } from "@visx/scale";
 
-import { ChartDataSource } from "../../types/CommonChartTypes";
+import {
+  ChartDataSource,
+  CommonChartProps,
+} from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const tOutsideAccessors = {
@@ -29,13 +34,15 @@ const insolationHistAccessors = {
 
 const VisxComposedMultiAxisChart = ({
   dataSet,
+  animated,
   onFinish,
-}: {
-  dataSet: ChartDataSource[];
-  onFinish: () => void;
-}) => {
+}: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="VisxComposedMultiAxisChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="VisxComposedMultiAxisChart"
+      key="VisxComposedMultiAxisChart"
+      onFinish={onFinish}
+    >
       <div style={{ position: "relative", width: 900 }}>
         <XYChart
           height={300}
@@ -54,12 +61,21 @@ const VisxComposedMultiAxisChart = ({
             label={"Nasłonecznienie [W/m²]"}
           />
           <Grid numTicks={4} />
-          <AnimatedBarSeries
-            data={dataSet}
-            dataKey="insolation"
-            {...insolationHistAccessors}
-            colorAccessor={() => "red"}
-          />
+          {animated ? (
+            <AnimatedBarSeries
+              data={dataSet}
+              dataKey="insolation"
+              {...insolationHistAccessors}
+              colorAccessor={() => "red"}
+            />
+          ) : (
+            <BarSeries
+              data={dataSet}
+              dataKey="insolation"
+              {...insolationHistAccessors}
+              colorAccessor={() => "red"}
+            />
+          )}
         </XYChart>
         <div
           style={{
@@ -77,18 +93,37 @@ const VisxComposedMultiAxisChart = ({
             yScale={{ type: "linear" }}
           >
             <Axis orientation="right" numTicks={3} label={"Temp. [℃]"} />
-            <AnimatedLineSeries
-              data={dataSet}
-              dataKey="sensed"
-              {...tSensedAccessors}
-              color="green"
-            />
-            <AnimatedLineSeries
-              data={dataSet}
-              dataKey="outside"
-              {...tOutsideAccessors}
-              color="blue"
-            />
+            {animated ? (
+              <>
+                <AnimatedLineSeries
+                  data={dataSet}
+                  dataKey="sensed"
+                  {...tSensedAccessors}
+                  color="green"
+                />
+                <AnimatedLineSeries
+                  data={dataSet}
+                  dataKey="outside"
+                  {...tOutsideAccessors}
+                  color="blue"
+                />
+              </>
+            ) : (
+              <>
+                <LineSeries
+                  data={dataSet}
+                  dataKey="sensed"
+                  {...tSensedAccessors}
+                  color="green"
+                />
+                <LineSeries
+                  data={dataSet}
+                  dataKey="outside"
+                  {...tOutsideAccessors}
+                  color="blue"
+                />
+              </>
+            )}
           </XYChart>
         </div>
         <div

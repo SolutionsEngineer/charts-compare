@@ -7,19 +7,18 @@ import {
   VictoryLegend,
   VictoryLine,
 } from "victory";
-import { ChartDataSource } from "../../types/CommonChartTypes";
+import { CommonChartProps } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const VictoryComposedSingleAxisChart = ({
   dataSet,
+  animated,
   onFinish,
-}: {
-  dataSet: ChartDataSource[];
-  onFinish: () => void;
-}) => {
+}: CommonChartProps) => {
   return (
     <RenderTimingCounter
       id="VictoryComposedSingleAxisChart"
+      key="VictoryComposedSingleAxisChart"
       onFinish={onFinish}
     >
       <div style={{ width: 900, height: 300 }}>
@@ -49,7 +48,14 @@ const VictoryComposedSingleAxisChart = ({
             }}
           />
           <VictoryLine
-            animate={true}
+            animate={
+              animated
+                ? {
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }
+                : false
+            }
             style={{
               data: { stroke: "blue" },
               parent: { border: "1px solid #ccc" },
@@ -59,10 +65,14 @@ const VictoryComposedSingleAxisChart = ({
             y="t_outside"
           />
           <VictoryBar
-            animate={{
-              duration: 2000,
-              onLoad: { duration: 1000 },
-            }}
+            animate={
+              animated
+                ? {
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }
+                : false
+            }
             style={{
               data: { fill: "green" },
               parent: { border: "1px solid #ccc" },

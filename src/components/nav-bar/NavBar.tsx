@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Menu, MenuProps } from "antd";
+import { Layout, Menu, MenuProps, Switch } from "antd";
 import { LibraryNameEnum } from "../../enums/LibraryNameEnum";
 import RechartsLogo from "../../logos/RechartsLogo";
 import { ChartTypeEnum } from "../../enums/ChartTypeEnum";
@@ -28,9 +28,10 @@ export type SelectedChart = {
 
 type NavBarProps = {
   onSelect: (selectedChart: SelectedChart) => void;
+  setAnimated: (animated: boolean) => void;
 };
 
-const NavBar = ({ onSelect }: NavBarProps) => {
+const NavBar = ({ onSelect, setAnimated }: NavBarProps) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const visxNestedNavItems: NavItemType[] = [
@@ -120,6 +121,10 @@ const NavBar = ({ onSelect }: NavBarProps) => {
       onCollapse={(value) => setCollapsed(value)}
     >
       <div className={styles.navHeaderText}>Charts Compare</div>
+      <div className={styles.animatedSliderWrapper}>
+        <Switch defaultChecked onChange={setAnimated} />
+        <span>Animated</span>
+      </div>
       <Menu
         theme="dark"
         mode="inline"

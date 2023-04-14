@@ -1,9 +1,18 @@
 import React from "react";
-import { Axis, Grid, XYChart, AnimatedLineSeries } from "@visx/xychart";
+import {
+  Axis,
+  Grid,
+  XYChart,
+  AnimatedLineSeries,
+  LineSeries,
+} from "@visx/xychart";
 import { LegendOrdinal, LegendItem, LegendLabel } from "@visx/legend";
 import { scaleOrdinal } from "@visx/scale";
 
-import { ChartDataSource } from "../../types/CommonChartTypes";
+import {
+  ChartDataSource,
+  CommonChartProps,
+} from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const accessors = {
@@ -11,15 +20,13 @@ const accessors = {
   yAccessor: (d: ChartDataSource) => d.t_outside as never,
 };
 
-const VisxLineChart = ({
-  dataSet,
-  onFinish,
-}: {
-  dataSet: ChartDataSource[];
-  onFinish: () => void;
-}) => {
+const VisxLineChart = ({ dataSet, animated, onFinish }: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="VisxLineChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="VisxLineChart"
+      key="VisxLineChart"
+      onFinish={onFinish}
+    >
       <div
         style={{
           display: "flex",
@@ -42,12 +49,21 @@ const VisxLineChart = ({
           />
           <Axis orientation="left" numTicks={4} label={"Temp. [℃]"} />
           <Grid numTicks={4} />
-          <AnimatedLineSeries
-            data={dataSet}
-            dataKey="outside"
-            {...accessors}
-            color="blue"
-          />
+          {animated ? (
+            <AnimatedLineSeries
+              data={dataSet}
+              dataKey="outside"
+              {...accessors}
+              color="blue"
+            />
+          ) : (
+            <LineSeries
+              data={dataSet}
+              dataKey="outside"
+              {...accessors}
+              color="blue"
+            />
+          )}
         </XYChart>
         <LegendOrdinal
           scale={scaleOrdinal({

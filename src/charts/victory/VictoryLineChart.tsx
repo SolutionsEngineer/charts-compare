@@ -6,18 +6,20 @@ import {
   VictoryLegend,
   VictoryLine,
 } from "victory";
-import { ChartDataSource } from "../../types/CommonChartTypes";
+import { CommonChartProps } from "../../types/CommonChartTypes";
 import RenderTimingCounter from "../../utils/RenderTimingCounter";
 
 const VictoryLineChart = ({
   dataSet,
+  animated,
   onFinish,
-}: {
-  dataSet: ChartDataSource[];
-  onFinish: () => void;
-}) => {
+}: CommonChartProps) => {
   return (
-    <RenderTimingCounter id="VictoryLineChart" onFinish={onFinish}>
+    <RenderTimingCounter
+      id="VictoryLineChart"
+      key="VictoryLineChart"
+      onFinish={onFinish}
+    >
       <div style={{ width: 900, height: 300 }}>
         <VictoryChart width={900} height={300}>
           <VictoryAxis
@@ -45,7 +47,14 @@ const VictoryLineChart = ({
             }}
           />
           <VictoryLine
-            animate={true}
+            animate={
+              animated
+                ? {
+                    duration: 2000,
+                    onLoad: { duration: 1000 },
+                  }
+                : false
+            }
             style={{
               data: { stroke: "blue" },
               parent: { border: "1px solid #ccc" },

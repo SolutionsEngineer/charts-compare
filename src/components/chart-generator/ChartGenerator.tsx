@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 
 import { debounce } from "lodash";
 import { SelectedChart } from "../nav-bar/NavBar";
@@ -18,10 +18,11 @@ import VisxComposedMultiAxisChart from "../../charts/visx/VisxComposedMultiAxisC
 
 type ChartGeneratorProps = {
   selectedChart?: SelectedChart;
+  animated: boolean;
 };
 
-const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
-  const [renderIteration, updateRenderIteration] = useState<number>(0);
+const ChartGenerator = ({ selectedChart, animated }: ChartGeneratorProps) => {
+  const [renderIteration, updateRenderIteration] = useState<number>(1);
 
   const forceIterationUpdate = useCallback(
     () => updateRenderIteration((prevState) => prevState + 1),
@@ -41,6 +42,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <RechartsLineChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -48,6 +50,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <RechartsBarChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -55,6 +58,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <RechartsComposedSingleAxisChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -62,11 +66,17 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <RechartsComposedMultiAxisChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
     }
-  }, [dataSet, debouncedIterationUpdateHandler, selectedChart?.chartType]);
+  }, [
+    animated,
+    dataSet,
+    debouncedIterationUpdateHandler,
+    selectedChart?.chartType,
+  ]);
 
   const properVictoryChart = useMemo(() => {
     switch (selectedChart?.chartType) {
@@ -74,6 +84,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VictoryLineChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -81,6 +92,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VictoryBarChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -88,6 +100,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VictoryComposedSingleAxisChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -95,11 +108,17 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VictoryComposedMultiAxisChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
     }
-  }, [dataSet, debouncedIterationUpdateHandler, selectedChart?.chartType]);
+  }, [
+    animated,
+    dataSet,
+    debouncedIterationUpdateHandler,
+    selectedChart?.chartType,
+  ]);
 
   const properVisxChart = useMemo(() => {
     switch (selectedChart?.chartType) {
@@ -107,6 +126,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VisxLineChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -114,6 +134,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VisxBarChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -121,6 +142,7 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VisxComposedSingleAxisChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
@@ -128,11 +150,17 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
         return (
           <VisxComposedMultiAxisChart
             dataSet={dataSet}
+            animated={animated}
             onFinish={debouncedIterationUpdateHandler}
           />
         );
     }
-  }, [dataSet, debouncedIterationUpdateHandler, selectedChart?.chartType]);
+  }, [
+    animated,
+    dataSet,
+    debouncedIterationUpdateHandler,
+    selectedChart?.chartType,
+  ]);
 
   const properChart = useMemo(() => {
     switch (selectedChart?.library) {
@@ -150,7 +178,16 @@ const ChartGenerator = ({ selectedChart }: ChartGeneratorProps) => {
     selectedChart?.library,
   ]);
 
-  return <div key={renderIteration}>{properChart}</div>;
+  useEffect(() => {
+    updateRenderIteration(1);
+  }, [selectedChart, animated]);
+
+  return (
+    <div key={renderIteration}>
+      <h1>Iteration: {renderIteration}</h1>
+      {properChart}
+    </div>
+  );
 };
 
 export default React.memo(ChartGenerator);
