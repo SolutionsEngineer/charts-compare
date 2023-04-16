@@ -34,8 +34,14 @@ const RechartsComposedSingleAxisChart = ({
           dataKey="t_outside"
           stroke="#8884d8"
           isAnimationActive={animated}
+          animationDuration={1000}
         />
-        <Bar dataKey="t_sensed" fill="#8884d8" isAnimationActive={animated} />
+        <Bar
+          dataKey="t_sensed"
+          fill="#8884d8"
+          isAnimationActive={animated}
+          animationDuration={1000}
+        />
         <Legend
           payload={[
             {

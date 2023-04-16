@@ -50,7 +50,7 @@ const VictoryLineChart = ({
             animate={
               animated
                 ? {
-                    duration: 2000,
+                    duration: 1000,
                     onLoad: { duration: 1000 },
                   }
                 : false

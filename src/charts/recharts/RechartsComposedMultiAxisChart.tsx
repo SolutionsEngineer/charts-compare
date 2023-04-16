@@ -42,6 +42,7 @@ const RechartsComposedMultiAxisChart = ({
           dataKey="t_sensed"
           stroke="#8884d8"
           isAnimationActive={animated}
+          animationDuration={1000}
           yAxisId="temperature"
         />
         <Line
@@ -49,12 +50,14 @@ const RechartsComposedMultiAxisChart = ({
           dataKey="t_outside"
           stroke="#82ca9d"
           isAnimationActive={animated}
+          animationDuration={1000}
           yAxisId="temperature"
         />
         <Bar
           dataKey="insolation_hist"
           fill="#8884d8"
           isAnimationActive={animated}
+          animationDuration={1000}
           yAxisId="insolation"
         />
         <Legend

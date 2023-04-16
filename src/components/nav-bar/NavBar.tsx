@@ -9,6 +9,7 @@ import styles from "./NavBar.styles.module.scss";
 import VisxLogo from "../../logos/VisxLogo";
 
 import { startCase } from "lodash";
+import { StopOutlined } from "@ant-design/icons";
 
 const { Sider } = Layout;
 
@@ -92,6 +93,11 @@ const NavBar = ({ onSelect, setAnimated }: NavBarProps) => {
   ];
 
   const mainNavItems: NavItemType[] = [
+    {
+      key: "",
+      label: "None",
+      icon: <StopOutlined />,
+    },
     {
       key: LibraryNameEnum.Recharts,
       label: startCase(LibraryNameEnum.Recharts),
